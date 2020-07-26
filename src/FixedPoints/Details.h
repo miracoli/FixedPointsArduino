@@ -14,7 +14,6 @@
 
 #pragma once
 
-#include <Arduino.h>
 #include <limits.h>
 #include <stdint.h>
 

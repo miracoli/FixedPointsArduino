@@ -1,0 +1,5 @@
+name: 'Testing'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
