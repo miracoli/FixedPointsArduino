@@ -66,8 +66,15 @@ BOOST_AUTO_TEST_CASE(test_utils) {
   BOOST_CHECK( 1.0 == static_cast<float>(b));
 }
 
-BOOST_AUTO_TEST_CASE(test_random) {
+BOOST_AUTO_TEST_CASE(test_random_ufixed) {
   auto a = randomUFixed<8, 8>();
+  BOOST_CHECK( sizeof(uint16_t) == sizeof(a.getInternal()));
+  BOOST_CHECK( sizeof(uint8_t) == sizeof(a.getInteger()));
+  BOOST_CHECK( sizeof(uint8_t) == sizeof(a.getFraction()));
+}
+
+BOOST_AUTO_TEST_CASE(test_random_sfixed) {
+  auto a = randomSFixed<7, 8>();
   BOOST_CHECK( sizeof(uint16_t) == sizeof(a.getInternal()));
   BOOST_CHECK( sizeof(uint8_t) == sizeof(a.getInteger()));
   BOOST_CHECK( sizeof(uint8_t) == sizeof(a.getFraction()));
@@ -85,5 +92,92 @@ BOOST_AUTO_TEST_CASE(test_multiply_sfixed) {
   BOOST_CHECK( 150.0 == static_cast<float>(multiply(a, b)));
 }
 
+BOOST_AUTO_TEST_CASE(test_basic_arithmetic_operations_same_size_ufixed) {
+  UQ8x8 a = 100.0;
+  UQ8x8 b = 1.5;
+  BOOST_CHECK( 101.5 == a + b);
+  BOOST_CHECK( 98.5 == a - b);
+  BOOST_CHECK( 150 == a * b);
+  BOOST_CHECK( UQ8x8(66.66666666666667) == a / b);
+}
+
+BOOST_AUTO_TEST_CASE(test_basic_arithmetic_operations_same_size_sfixed) {
+  SQ7x8 a = 100.0;
+  SQ7x8 b = 1.5;
+  BOOST_CHECK( 101.5 == a + b);
+  BOOST_CHECK( 98.5 == a - b);
+  BOOST_CHECK( 150 == a * b);
+  BOOST_CHECK( SQ7x8(66.66666666666667) == a / b);
+}
+
+BOOST_AUTO_TEST_CASE(test_compound_assignemnt_operators_ufixed) {
+  UQ8x8 a = 100.0;
+  UQ8x8 b = 1.5;
+  a += b;
+  BOOST_CHECK( 101.5 == a);
+  a -= b;
+  BOOST_CHECK( 100.0 == a);
+  a *= b;
+  BOOST_CHECK( 150 == a);
+  a /= b;
+  BOOST_CHECK( 100.0 == a);
+}
+
+BOOST_AUTO_TEST_CASE(test_compound_assignemnt_operators_sfixed) {
+  SQ7x8 a = 100.0;
+  SQ7x8 b = 1.25;
+  a += b;
+  BOOST_CHECK( 101.25 == a);
+  a -= b;
+  BOOST_CHECK( 100.0 == a);
+  a *= b;
+  BOOST_CHECK( 125 == a);
+  a /= b;
+  BOOST_CHECK( 100.0 == a);
+
+  a = -100.0;
+  a += b;
+  BOOST_CHECK( -98.75 == a);
+  a -= b;
+  BOOST_CHECK( -100.0 == a);
+  a *= b;
+  BOOST_CHECK( -125 == a);
+  a /= b;
+  BOOST_CHECK( -100.0 == a);
+}
+
+BOOST_AUTO_TEST_CASE(test_increment_and_decrement_ufixed) {
+  UQ8x8 a = 100.0;
+  ++a;
+  BOOST_CHECK( 101.0 == a);
+  --a;
+  BOOST_CHECK( 100.0 == a);
+  UQ8x8 b = a++;
+  BOOST_CHECK( 100.0 == b);
+  BOOST_CHECK( 101.0 == a);
+  b = a--;
+  BOOST_CHECK( 100.0 == a);
+  BOOST_CHECK( 101.0 == b);
+}
+
+BOOST_AUTO_TEST_CASE(test_increment_and_decrement_sfixed) {
+  SQ7x8 a = 100.0;
+  ++a;
+  BOOST_CHECK( 101.0 == a);
+  --a;
+  BOOST_CHECK( 100.0 == a);
+  SQ7x8 b = a++;
+  BOOST_CHECK( 100.0 == b);
+  BOOST_CHECK( 101.0 == a);
+  b = a--;
+  BOOST_CHECK( 100.0 == a);
+  BOOST_CHECK( 101.0 == b);
+}
+
+BOOST_AUTO_TEST_CASE(test_statics_ufixed) {
+  UQ8x8 a = 100.0;
+  UQ8x8 b = UQ8x8::fromInternal(a.getInternal());
+  BOOST_CHECK( 100.0 == b);
+}
 
 BOOST_AUTO_TEST_SUITE_END()
