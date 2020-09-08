@@ -213,7 +213,7 @@ constexpr UFixed<Integer, Fraction>::operator SFixed<IntegerOut, FractionOut>() 
 //
 
 template< unsigned Integer, unsigned Fraction >
-constexpr UFixed<Integer, Fraction> UFixed<Integer, Fraction>::fromInternal(const typename UFixed<Integer, Fraction>::InternalType & value)
+constexpr UFixed<Integer, Fraction> UFixed<Integer, Fraction>::fromInternal(const typename UFixed<Integer, Fraction>::InternalType & value) noexcept
 {
 	return UFixed<Integer, Fraction>(RawType(value));
 }

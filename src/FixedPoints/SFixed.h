@@ -108,7 +108,7 @@ public:
 	template< unsigned IntegerOut, unsigned FractionOut >
 	constexpr explicit operator UFixed<IntegerOut, FractionOut>() const;
 
-	static constexpr SFixed fromInternal(const InternalType & value);
+	static constexpr SFixed fromInternal(const InternalType & value) noexcept;
 
 	constexpr SFixed operator -() const;
 	SFixed & operator ++() noexcept;
