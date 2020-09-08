@@ -254,26 +254,26 @@ constexpr auto operator /(const UFixed<IntegerLeft, FractionLeft> & left, const 
 
 #define LOGIC_OPERATOR( type, op )\
 	template< unsigned Integer, unsigned Fraction >\
-	constexpr bool operator op (const UFixed<Integer, Fraction> & left, const type & right)\
+	constexpr bool operator op (const UFixed<Integer, Fraction> & left, const type & right) noexcept \
 	{\
 		return (left op UFixed<Integer, Fraction>(right));\
 	}\
 	\
 	template< unsigned Integer, unsigned Fraction >\
-	constexpr bool operator op (const type & left, const UFixed<Integer, Fraction> & right)\
+	constexpr bool operator op (const type & left, const UFixed<Integer, Fraction> & right) noexcept \
 	{\
 		return (UFixed<Integer, Fraction>(left) op right);\
 	}
 
 #define ARITHMETIC_OPERATOR( type, op )\
 	template< unsigned Integer, unsigned Fraction >\
-	constexpr UFixed<Integer, Fraction> operator op (const UFixed<Integer, Fraction> & left, const type & right)\
+	constexpr UFixed<Integer, Fraction> operator op (const UFixed<Integer, Fraction> & left, const type & right) noexcept \
 	{\
 		return (left op UFixed<Integer, Fraction>(right));\
 	}\
 	\
 	template< unsigned Integer, unsigned Fraction >\
-	constexpr UFixed<Integer, Fraction> operator op (const type & left, const UFixed<Integer, Fraction> & right)\
+	constexpr UFixed<Integer, Fraction> operator op (const type & left, const UFixed<Integer, Fraction> & right) noexcept \
 	{\
 		return (UFixed<Integer, Fraction>(left) op right);\
 	}

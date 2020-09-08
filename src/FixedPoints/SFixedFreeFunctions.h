@@ -254,26 +254,26 @@ constexpr auto operator /(const SFixed<IntegerLeft, FractionLeft> & left, const 
 
 #define LOGIC_OPERATOR( type, op )\
 	template< unsigned Integer, unsigned Fraction >\
-	constexpr bool operator op (const SFixed<Integer, Fraction> & left, const type & right)\
+	constexpr bool operator op (const SFixed<Integer, Fraction> & left, const type & right) noexcept\
 	{\
 		return (left op SFixed<Integer, Fraction>(right));\
 	}\
 	\
 	template< unsigned Integer, unsigned Fraction >\
-	constexpr bool operator op (const type & left, const SFixed<Integer, Fraction> & right)\
+	constexpr bool operator op (const type & left, const SFixed<Integer, Fraction> & right) noexcept\
 	{\
 		return (SFixed<Integer, Fraction>(left) op right);\
 	}
 
 #define ARITHMETIC_OPERATOR( type, op )\
 	template< unsigned Integer, unsigned Fraction >\
-	constexpr SFixed<Integer, Fraction> operator op (const SFixed<Integer, Fraction> & left, const type & right)\
+	constexpr SFixed<Integer, Fraction> operator op (const SFixed<Integer, Fraction> & left, const type & right) noexcept\
 	{\
 		return (left op SFixed<Integer, Fraction>(right));\
 	}\
 	\
 	template< unsigned Integer, unsigned Fraction >\
-	constexpr SFixed<Integer, Fraction> operator op (const type & left, const SFixed<Integer, Fraction> & right)\
+	constexpr SFixed<Integer, Fraction> operator op (const type & left, const SFixed<Integer, Fraction> & right) noexcept\
 	{\
 		return (SFixed<Integer, Fraction>(left) op right);\
 	}
