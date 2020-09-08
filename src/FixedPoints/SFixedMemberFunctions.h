@@ -238,14 +238,14 @@ constexpr SFixed<Integer, Fraction> SFixed<Integer, Fraction>::operator -() cons
 //
 
 template< unsigned Integer, unsigned Fraction >
-SFixed<Integer, Fraction> & SFixed<Integer, Fraction>::operator ++()
+SFixed<Integer, Fraction> & SFixed<Integer, Fraction>::operator ++() noexcept
 {
 	this->value += (1 << FractionSize);
 	return *this;
 }
 
 template< unsigned Integer, unsigned Fraction >
-SFixed<Integer, Fraction> & SFixed<Integer, Fraction>::operator --()
+SFixed<Integer, Fraction> & SFixed<Integer, Fraction>::operator --() noexcept
 {
 	this->value -= (1 << FractionSize);
 	return *this;

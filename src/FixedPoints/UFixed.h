@@ -111,8 +111,8 @@ public:
 
 	static constexpr UFixed fromInternal(const InternalType & value);
 
-	UFixed & operator ++();
-	UFixed & operator --();
+	UFixed & operator ++() noexcept;
+	UFixed & operator --() noexcept;
 	UFixed operator ++(int);
 	UFixed operator --(int);
 	UFixed & operator +=(const UFixed & other);

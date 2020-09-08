@@ -111,8 +111,8 @@ public:
 	static constexpr SFixed fromInternal(const InternalType & value);
 
 	constexpr SFixed operator -() const;
-	SFixed & operator ++();
-	SFixed & operator --();
+	SFixed & operator ++() noexcept;
+	SFixed & operator --() noexcept;
 	SFixed operator ++(int);
 	SFixed operator --(int);
 	SFixed & operator +=(const SFixed & other);
