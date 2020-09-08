@@ -123,7 +123,7 @@ public:
 public:
 	static constexpr SFixed Epsilon = SFixed::fromInternal(1);
 	static constexpr SFixed MinValue = SFixed::fromInternal(FIXED_POINTS_DETAILS::MsbMask<InternalSize>::Value);
-	static constexpr SFixed MaxValue = SFixed::fromInternal(~FIXED_POINTS_DETAILS::MsbMask<InternalSize>::Value);
+	static constexpr SFixed MaxValue = SFixed::fromInternal(~static_cast<InternalType>(FIXED_POINTS_DETAILS::MsbMask<InternalSize>::Value));
 	
 	// 40 digits is probably enough for these
 	static constexpr SFixed Pi = 3.1415926535897932384626433832795028841971;
