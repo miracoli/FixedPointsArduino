@@ -93,7 +93,7 @@ public:
 	constexpr UFixed(const double & value);
 	constexpr UFixed(const float & value);
 	constexpr UFixed(const long double & value);
-	
+
 public:
 	constexpr InternalType getInternal() const;
 	constexpr IntegerType getInteger() const;
@@ -119,7 +119,7 @@ public:
 	UFixed & operator -=(const UFixed & other);
 	UFixed & operator *=(const UFixed & other);
 	UFixed & operator /=(const UFixed & other);
-	
+
 public:
 	static constexpr UFixed Epsilon = UFixed::fromInternal(1);
 	static constexpr UFixed MinValue = UFixed::fromInternal(0);
