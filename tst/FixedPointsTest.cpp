@@ -14,6 +14,9 @@
 using namespace boost::unit_test;
 using namespace std;
 
+template class UFixed<8, 8>;
+template class SFixed<7, 8>;
+
 BOOST_AUTO_TEST_SUITE(testsuite)
 
 BOOST_AUTO_TEST_CASE(test_getters_ufixed) {
@@ -30,12 +33,19 @@ BOOST_AUTO_TEST_CASE(test_getters_ufixed) {
 
 BOOST_AUTO_TEST_CASE(test_cast_operators_ufixed) {
   UQ8x8 a = 1.5;
-  UQ16x16 b = 1.5;
   BOOST_CHECK( 1.5 == static_cast<float>(a) );
   BOOST_CHECK( 1.5 == static_cast<double>(a) );
   BOOST_CHECK( 1.5 == static_cast<long double>(a) );
-  //BOOST_CHECK( 1 == static_cast<unsigned int>(a) );
-  BOOST_CHECK( b == static_cast<UQ16x16>(a) );
+  BOOST_CHECK( 1 == static_cast<unsigned char>(a) );
+  BOOST_CHECK( 1.5 == static_cast<UQ16x16>(a) );
+  BOOST_CHECK(1.5 == (static_cast<UFixed<16, 8> >(a)));
+  BOOST_CHECK(1.5 == (static_cast<UFixed<20, 4> >(a)));
+
+  BOOST_CHECK(1.5 == static_cast<SQ7x8>(a));
+  BOOST_CHECK(1.5 == (static_cast<SFixed<7, 16> >(a)));
+  BOOST_CHECK(1.5 == (static_cast<SFixed<11, 4> >(a)));
+  a = 0;
+  BOOST_CHECK(0 == static_cast<SQ7x8>(a));
 }
 
 BOOST_AUTO_TEST_CASE(test_getters_sfixed) {
@@ -56,8 +66,15 @@ BOOST_AUTO_TEST_CASE(test_cast_operators_sfixed) {
   BOOST_CHECK( 1.5 == static_cast<float>(a) );
   BOOST_CHECK( 1.5 == static_cast<double>(a) );
   BOOST_CHECK( 1.5 == static_cast<long double>(a) );
-  //BOOST_CHECK( 1 == static_cast<unsigned int>(a) );
+  BOOST_CHECK( 1 == static_cast<signed char>(a) );
   BOOST_CHECK( b == static_cast<SQ15x16>(a) );
+  BOOST_CHECK(1.5 == static_cast<UQ8x8>(a));
+  a = 0;
+  BOOST_CHECK(0 == static_cast<UQ8x8>(a));
+  a = -1;
+  BOOST_CHECK(255 == static_cast<UQ8x8>(a));
+  a = -12.5;
+  BOOST_CHECK(243.5 == static_cast<UQ8x8>(a));
 }
 
 BOOST_AUTO_TEST_CASE(test_utils) {
@@ -178,6 +195,46 @@ BOOST_AUTO_TEST_CASE(test_statics_ufixed) {
   UQ8x8 a = 100.0;
   UQ8x8 b = UQ8x8::fromInternal(a.getInternal());
   BOOST_CHECK( 100.0 == b);
+}
+
+BOOST_AUTO_TEST_CASE(test_statics_sfixed) {
+  SQ7x8 a = 100.0;
+  SQ7x8 b = SQ7x8::fromInternal(a.getInternal());
+  BOOST_CHECK( 100.0 == b);
+  BOOST_CHECK( -100.0 == -b);
+}
+
+BOOST_AUTO_TEST_CASE(test_constructors_ufixed) {
+  UQ8x8 a;
+  BOOST_CHECK(0.0 == a);
+  UQ8x8 b(static_cast<const char> (5));
+  BOOST_CHECK(5 == b);
+  UQ8x8 c(static_cast<const unsigned char> (5));
+  BOOST_CHECK(5 == c);
+  UQ8x8 d(static_cast<const signed char> (5));
+  BOOST_CHECK(5 == d);
+  UQ8x8 e(static_cast<const unsigned short> (5));
+  BOOST_CHECK(5 == e);
+  UQ8x8 f(static_cast<const signed short> (5));
+  BOOST_CHECK(5 == f);
+  UQ8x8 g(static_cast<const unsigned int> (5));
+  BOOST_CHECK(5 == g);
+  UQ8x8 h(static_cast<const signed int> (5));
+  BOOST_CHECK(5 == h);
+  UQ8x8 i(static_cast<const unsigned long> (5));
+  BOOST_CHECK(5 == i);
+  UQ8x8 j(static_cast<const signed long> (5));
+  BOOST_CHECK(5 == j);
+  UQ8x8 k(static_cast<const unsigned long long> (5));
+  BOOST_CHECK(5 == k);
+  UQ8x8 l(static_cast<const signed long long>(5));
+  BOOST_CHECK(5 == l);
+  UQ8x8 m(static_cast<float>(5));
+  BOOST_CHECK(5 == m);
+  UQ8x8 n(static_cast<long double>(5));
+  BOOST_CHECK(5 == n);
+  UQ8x8 o(static_cast<long double>(5));
+  BOOST_CHECK(5 == o);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
